@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   // Required for deployment to a GitHub Pages repository.
   // Change this if your repository has a different name.
-  base: '/buland-coffee-house/',
+  base: '/coffee_house/',
 
   plugins: [react()],
 
