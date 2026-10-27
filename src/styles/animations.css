@@ -1,0 +1,149 @@
+/* ============================================================
+   BULAND COFFEE HOUSE — motion
+   Keyframes, ambient loops, film grain and reduced-motion rules.
+   ============================================================ */
+
+/* ------------------------------------------------------- keyframes */
+
+@keyframes navPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(184, 121, 69, 0.5);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.82);
+    box-shadow: 0 0 0 5px rgba(184, 121, 69, 0);
+  }
+}
+
+@keyframes beanDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-6deg);
+  }
+  50% {
+    transform: translate3d(-14px, 22px, 0) rotate(8deg);
+  }
+}
+
+@keyframes beanFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes ringSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes textPathScroll {
+  from {
+    startOffset: 0%;
+  }
+  to {
+    startOffset: 100%;
+  }
+}
+
+.experience__ring textPath {
+  animation: textPathScroll 20s linear infinite;
+}
+
+@keyframes menuItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nudgeDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* --------------------------------------------------------- film grain */
+
+.app::after {
+  content: '';
+  position: fixed;
+  /* Just enough bleed for the 2% shift below — a -50% bleed made this layer
+     four times the size of the viewport, which is a lot of pixels to composite
+     on top of a full-bleed WebGL hero. */
+  inset: -12%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grainShift 0.9s steps(3) infinite;
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(-2%, 1.5%, 0);
+  }
+  66% {
+    transform: translate3d(1.5%, -2%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* -------------------------------------------------- reveal utilities */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .app::after {
+    display: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
